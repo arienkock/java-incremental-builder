@@ -102,6 +102,9 @@ public class IncrementalTest {
 		fixTheBuild();
 		HashSet<String> writtenFilesFourthTime = jb.build(srcDir, sources, workDir.resolve("build"), invertedDeps);
 		assertEquals("two files written", 2, writtenFilesFourthTime.size());
+		dependantsOfClassOne = invertedDeps.get(classOnePath.toString());
+		assertTrue("ClassTwo should depend on ClassOne", dependantsOfClassOne.contains(classTwoPath.toString()));
+		assertTrue("UnrelatedClass isn't dependant on anything", !invertedDeps.containsKey(unrelatedClassPath.toString()));
 	}
 
 	private void fixTheBuild() throws IOException {
